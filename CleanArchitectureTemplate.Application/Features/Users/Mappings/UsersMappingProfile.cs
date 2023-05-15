@@ -10,8 +10,8 @@ namespace CleanArchitectureTemplate.Application.Features.Users.Mappings
         public UsersMappingProfile()
         {
             CreateMap<UsersEntity, UserResponseDto>();
-            //CreateMap<UpdateUserRequestDto, UsersEntity>();
             CreateMap<CreateUserRequestDto, UsersEntity>();
+            CreateMap<UpdateUserRequestDto, UsersEntity>();
         }
     }
 }

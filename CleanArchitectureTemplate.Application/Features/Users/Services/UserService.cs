@@ -53,12 +53,12 @@ public class UserService : IUserService
         return dto;
     }
 
-    public async Task<UserResponseDto> UpdateUser(UpdateUserRequestDto request, CancellationToken cancellationToken = default)
+    public async Task<UserResponseDto> UpdateUser(Guid id, UpdateUserRequestDto request, CancellationToken cancellationToken = default)
     {
-        var user = _mapper.Map<UsersEntity>(request);
-        var result = await _userRepository.UpdateAsync(user);
-
-        var dto = _mapper.Map<UserResponseDto>(result);
+        var userToUpdate = _mapper.Map<UsersEntity>(request);
+        userToUpdate.Id = id;
+        var updatedUser = await _userRepository.UpdateAsync(userToUpdate);
+        var dto = _mapper.Map<UserResponseDto>(updatedUser);
         return dto;
     }
 

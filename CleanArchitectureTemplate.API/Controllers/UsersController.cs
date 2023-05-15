@@ -19,7 +19,7 @@ namespace CleanArchitectureTemplate.API.Controllers
             _userService = userService;
         }
 
-        [Authorize]
+        //[Authorize]
         [HttpGet]
         [SwaggerOperation(
              Summary = "Gets users in the database")]
@@ -54,8 +54,7 @@ namespace CleanArchitectureTemplate.API.Controllers
            Summary = "Updates existing user")]
         public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateUserRequestDto request, CancellationToken cancellationToken = default)
         {
-            request.Id = id;
-            var result = await _userService.UpdateUser(request, cancellationToken);
+            var result = await _userService.UpdateUser(id, request, cancellationToken);
             return Ok(BaseResponse.Updated(result));
         }
 

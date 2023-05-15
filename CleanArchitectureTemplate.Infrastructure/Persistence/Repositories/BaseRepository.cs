@@ -3,7 +3,6 @@ using CleanArchitectureTemplate.Application.Interfaces;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 {
@@ -48,19 +47,10 @@ namespace CleanArchitectureTemplate.Infrastructure.Persistence.Repositories
 
         public virtual async Task<TEntity> UpdateAsync(TEntity entity)
         {
-            var _entity = await GetById(entity.Id);
-            Type type = typeof(TEntity);
-            PropertyInfo[] propertyInfo = type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-            foreach (var item in propertyInfo)
-            {
-                var fieldValue = item.GetValue(entity);
-                if (fieldValue != null)
-                {
-                    item.SetValue(_entity, fieldValue);
-                }
-            }
+            var dbEntity = await GetById(entity.Id);
+            _context.Entry(dbEntity).CurrentValues.SetValues(entity);
             await _context.SaveChangesAsync();
-            return _entity;
+            return dbEntity;
         }
 
         public virtual async Task<TEntity> Delete(Guid id)

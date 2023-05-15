@@ -10,7 +10,7 @@ namespace CleanArchitectureTemplate.Application.Interfaces.Services
         Task<Paged<UserResponseDto>> GetPagedUsers(PaginationQuery paginationQuery, CancellationToken cancellationToken);
         Task<UserResponseDto> GetUserById(Guid id);
         Task<UserResponseDto> CreateUser(CreateUserRequestDto request, CancellationToken cancellationToken = default);
-        Task<UserResponseDto> UpdateUser(UpdateUserRequestDto request, CancellationToken cancellationToken = default);
+        Task<UserResponseDto> UpdateUser(Guid id, UpdateUserRequestDto request, CancellationToken cancellationToken = default);
         Task<UserResponseDto> DeleteUserById(Guid id);
     }
 }
